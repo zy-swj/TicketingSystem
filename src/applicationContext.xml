@@ -1,0 +1,56 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd ">
+		
+	<!-- spring-mybatis连接点    1 拿到数据源 -->
+	<context:property-placeholder location="classpath:db.properties" />	
+	<bean id="dataSource" 
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
+	    <property name="driverClassName"   value="${jdbc.driver}"/>  
+	    <property name="url" value="${jdbc.url}" />  
+	    <property name="username" value="${jdbc.username}" />  
+	    <property name="password" value="${jdbc.password}" />  
+	</bean>
+	
+	<!--配置SqlSession会话工厂类-SqlSession就相当于dal层的xxxMapper映射文件（对应实现类）  -->   	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+	    <property  name="dataSource" ref="dataSource" />  
+	    <property name="configLocation" value="classpath:mybatis.xml"></property>  
+	</bean> 
+	
+	
+<!-- 注解类bean扫描 ,注意dal中XXXMapper.xml文件（作用相当于实现类）扫不到-->
+  	
+	<context:component-scan base-package="cn.service"></context:component-scan>
+
+<!-- spring-mybatis连接点2：扫描DAL层xxxMapper映射文件（相当于dao的实现类） -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="cn.dao" />
+	</bean>	
+	
+	<aop:aspectj-autoproxy  proxy-target-class="true"/>  
+
+<!-- jdbc 12 -->
+
+	<!-- 事务配置 -->
+ 	<bean id="transactionManager"  
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="dataSource" />  
+    </bean> 
+	<tx:annotation-driven transaction-manager="transactionManager" /> 	
+  			
+		
+</beans>
