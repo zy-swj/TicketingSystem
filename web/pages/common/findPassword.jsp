@@ -7,6 +7,32 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+    <script>
+        $('#findPassword').click(function (){
+            var user_name = $('#user_name').val();
+            var user_question = $('#user_question').val();
+            var user_answer = $('#user_answer').val();
+            if("" != user_name && "" != user_question && "" != user_answer){
+                $.ajax({
+                    url:"${pageContext.request.contextPath}/user/checkUser.action",
+                    data:{
+                        user_name:user_name,
+                        user_question:user_question,
+                        user_answer:user_answer
+                    },
+                    type:'post',
+                    success:function(response){
+                        $('#content').html(response);
+                    },
+                    error:function () {
+                        alert("验证错误!!!");
+                    }
+                });
+            }
+            else
+                alert("信息不能出现空值!!!");
+        });
+    </script>
 </head>
 
 <body>
@@ -35,26 +61,7 @@
                 <input id="user_answer" type="text" class="form-control"
                        placeholder="密保答案">
             </div>
-            <div class="form-group input-group">
-				<span class="input-group-addon">
-                     <span class="glyphicon glyphicon-lock"></span>
-                 </span>
-
-
-                <input id="user_password" type="password" class="form-control"
-                       placeholder="重置密码">
-            </div>
-            <div class="form-group input-group">
-				<span class="input-group-addon">
-                     <span class="glyphicon glyphicon-lock"></span>
-                 </span>
-
-                <input id="user_password2" type="password" class="form-control"
-                       placeholder="确认密码">
-            </div>
-
-
-            <button type="submit" class="btn btn-info form-control">确认</button>
+            <button type="submit" class="btn btn-info form-control" id="findPassword">确认</button>
             <br/><br/>
             <button type="button" class="btn btn-default form-control" style="background-color: #a9a9a9"
                     onclick="script:window.history.back();location.reload();">取消</button>

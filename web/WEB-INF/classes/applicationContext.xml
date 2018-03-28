@@ -34,7 +34,7 @@
 	
 <!-- 注解类bean扫描 ,注意dal中XXXMapper.xml文件（作用相当于实现类）扫不到-->
   	
-	<context:component-scan base-package="cn.service"></context:component-scan>
+	<context:component-scan base-package="cn.service"> </context:component-scan>
 
 <!-- spring-mybatis连接点2：扫描DAL层xxxMapper映射文件（相当于dao的实现类） -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

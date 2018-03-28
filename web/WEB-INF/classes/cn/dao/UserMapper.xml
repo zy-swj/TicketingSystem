@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+               "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="cn.dao.UserMapper">
+
+    <select id="selectUserAndPassword" parameterType="java.lang.String" resultType="cn.bean.UserBean" >
+        SELECT * FROM tb_user WHERE (user_name = #{user_name}
+         OR user_phone = #{user_name}
+         OR user_email = #{user_name})
+        AND user_password = #{user_password}
+    </select>
+
+    <select id="selectQuestionAndAnswer" parameterType="java.lang.String" resultType="cn.bean.UserBean" >
+        SELECT * FROM tb_user WHERE (user_name = #{user_name}
+        OR user_phone = #{user_name}
+        OR user_email = #{user_name})
+        AND (user_question = #{user_question}
+        AND user_answer= #{user_answer})
+    </select>
+
+    <insert id="insertUser" parameterType="cn.bean.UserBean">
+        INSERT INTO tb_user( user_name,user_password,user_phone,user_email,user_question,user_answer)
+        VALUES (#{user.user_name},
+        #{user.user_password},
+        #{user.user_phone},
+        #{user.user_email},
+        #{user.user_question},
+        #{user.user_answer})
+    </insert>
+
+    <update id="updatePassword" parameterType="cn.bean.UserBean">
+        UPDATE tb_user
+        SET user_password = #{user.user_password}
+        WHERE user_name = #{user.user_name}
+    </update>
+
+    <select id="countUser" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT IFNULL(count(*),0) FROM tb_user WHERE user_name = #{user.user_name}
+        OR user_phone = #{user.user_phone}
+        OR user_email = #{user.user_email}
+    </select>
+
 
 </mapper>

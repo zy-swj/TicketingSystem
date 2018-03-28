@@ -1,122 +1,69 @@
 package cn.dao;
 
+import cn.bean.PriceBean;
 import cn.bean.TicketingBean;
-import org.junit.jupiter.api.Test;
 
-import javax.net.ssl.HttpsURLConnection;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import static cn.helper.GetJsonAndDeal.getCodeByName;
+import static cn.helper.GetJsonAndDeal.getPrice;
+import static cn.helper.QueryTickets.queryTickets;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author zhoumin
  * @date 2018/3/14 21:28
  */
 public class TicketingDao {
-    public List<TicketingBean> selectTickets(String train_date,String from_station_name,String to_station_name,String purpose_codes) {
-        String from_station = getCodeByName().get(from_station_name);
-        String to_station = getCodeByName().get(to_station_name);
-        return null;
+
+    public static List<TicketingBean> selectTickets(String train_date,String from_station_name,String to_station_name,String purpose_codes) throws Exception {
+        String from_station = getCodeByName(from_station_name.replaceAll("\\s*",""));
+        String to_station = getCodeByName(to_station_name.replaceAll("\\s*",""));//将名字转换为标准的地名代码
+        List<TicketingBean> ticketsList = queryTickets(train_date,from_station,to_station,purpose_codes);
+        return ticketsList;
     }
 
-
-
-
-   /* get code by name and add map
-    * name_sation
-    * url:https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.9030
-    *获取json字符串，分析json字符串，进行分割，用正则表达式取出需要的部分存入hashmap
-    * */
-    public static Map<String, String> getCodeByName() {
-        Map<String, String> map = new HashMap<String, String>();
-        try{
-            //获取json写入字符串
-            ignoreSSL();//ignore ssl
-            String urlStr = "https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.9030";
-            URL url = new URL(urlStr);
-            HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
-
-            InputStreamReader input = new InputStreamReader(con.getInputStream(),
-                    "utf-8");
-            BufferedReader bfreader = new BufferedReader(input);
-
-            StringBuffer stringBuffer = new StringBuffer();
-            String nameStr = "";
-            while ((nameStr = bfreader.readLine()) != null) {
-                stringBuffer.append(nameStr);
-            }
-
-
-            //第一次处理json字符串
-            String[] nameArr = nameStr.split("\\@");//获得json由@分割开
-            Pattern p = Pattern.compile("[^\\@].*\\|.*");
-            List<String> jsonLists = new ArrayList<String>();
-            for (Object object : nameArr) {
-                Matcher m = p.matcher(object.toString());
-                if (m.find()) {
-                    jsonLists.add(m.group(0));
-                }
-            }
-            //第二次处理json字符互串
-            for (int i = 0; i < jsonLists.size(); i++) {
-                String temp = jsonLists.get(i).toString();
-                String jsonArr[] = temp.split("\\|");
-                List<String> mapLists = new ArrayList<String>();
-                for (Object object : jsonArr) {
-                    mapLists.add(object.toString());
-                }
-                map.put(mapLists.get(1), mapLists.get(2));
-
-            }
-        }
-        catch (Exception e){
-            System.out.print("请求超时！！！");
-        }
-        return map;
-
-    }
-
-    /*
-     *Ignore the 12306 certificate.
-     *
-     * */
-    public static void ignoreSSL() throws Exception {
-        javax.net.ssl.TrustManager[] trustAllCerts = new javax.net.ssl.TrustManager[1];
-        javax.net.ssl.TrustManager ignoreSSL = new miTM();
-        trustAllCerts[0] = ignoreSSL;
-        javax.net.ssl.SSLContext sc = javax.net.ssl.SSLContext
-                .getInstance("SSL");
-        sc.init(null, trustAllCerts, null);
-        HttpsURLConnection.setDefaultSSLSocketFactory(sc
-                .getSocketFactory());
-    }
-
-    static class miTM implements javax.net.ssl.TrustManager,
-            javax.net.ssl.X509TrustManager {
-
-        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-            return null;
-        }
-
-        public void checkServerTrusted(java.security.cert.X509Certificate[] certs,
-                                       String authType) throws java.security.cert.CertificateException {
-            return;
-        }
-
-        public void checkClientTrusted(java.security.cert.X509Certificate[] certs,
-                                       String authType) throws java.security.cert.CertificateException {
-            return;
-        }
+    public static List<PriceBean> selectPrice(TicketingBean tickets) throws Exception {
+        Map<String,String> priceMap ;
+        PriceBean priceBean = new PriceBean();
+        priceMap=getPrice(tickets);
+        if(priceMap.get("WZ") != null)
+            priceBean.setWZ(priceMap.get("WZ"));
+        if(priceMap.get("A1") != null)
+            priceBean.setA1(priceMap.get("A1"));
+        if(priceMap.get("A2") != null)
+            priceBean.setA2(priceMap.get("A2"));
+        if(priceMap.get("A3") != null)
+            priceBean.setA3(priceMap.get("A3"));
+        if(priceMap.get("A4") != null)
+            priceBean.setA4(priceMap.get("A4"));
+        if(priceMap.get("A6") != null)
+            priceBean.setA6(priceMap.get("A6"));
+        if(priceMap.get("F") != null)
+            priceBean.setF(priceMap.get("F"));
+        if(priceMap.get("O") != null)
+            priceBean.setO(priceMap.get("O"));
+        if(priceMap.get("M") != null)
+            priceBean.setM(priceMap.get("M"));
+        if(priceMap.get("P") != null)
+            priceBean.setP(priceMap.get("P"));
+        if(priceMap.get("A9") != null)
+            priceBean.setA9(priceMap.get("A9"));
+        List<PriceBean> listPrice = new ArrayList<>();
+        listPrice.add(priceBean);
+        return listPrice;
     }
 
     @Test
-    public void test(){
-        System.out.print(getCodeByName().get("南京"));
+    public void test() throws Exception {
+        System.out.println(getCodeByName("上海"));
+        System.out.println(queryTickets("2018-03-22",getCodeByName("上海"),getCodeByName("南京"),"ADULT"));
     }
+
 }
+
+
+

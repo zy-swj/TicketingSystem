@@ -4,7 +4,9 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+
 <script>
+
 	function query() {
 		var train_date = document.getElementById("train_date").value;
 		var from_station = document.getElementById("from_station").value;
@@ -29,13 +31,34 @@
 			}
 		});
 	}
-	
 	function change() {
 		var val1 = document.getElementById("from_station").value;
 		var val2 = document.getElementById("to_station").value;
 		document.getElementById("from_station").value = val2;
 		document.getElementById("to_station").value = val1;
 	}
+    function buyTickets(train_no,from_station_no,to_station_no,seat_types,station_train_code,from_station_name,to_station_name,start_time){
+	    var train_date = document.getElementById("train_date").value;
+        var tickets = {
+            station_train_code:station_train_code,
+			from_station_name:from_station_name,
+			to_station_name:to_station_name,
+			start_time:start_time,
+            train_date:train_date,
+            train_no:train_no,
+            from_station_no:from_station_no,
+            to_station_no:to_station_no,
+            seat_types:seat_types
+        };
+        $.ajax({
+            url:"${pageContext.request.contextPath}/tickets/buyTickets.action",
+            data:tickets,
+            type:'post',
+            success:function(response){
+                $('#content').html(response);
+            }
+        });
+    }
 </script>
 </head>
 

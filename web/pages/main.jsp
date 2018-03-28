@@ -14,22 +14,16 @@
     <script src="${pageContext.request.contextPath}/content/bootstrap/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function(){
-            $.ajax($('#content').load("https://www.baidu.com"));
+            $.ajax($('#content').load("${pageContext.request.contextPath}/pages/common/queryTickets.jsp"));
 
         });
         function userLogin(){
             $.ajax($('#content').load("${pageContext.request.contextPath}/pages/common/login.jsp"));
         }
+
         function login12306(){
             $.ajax(
-                $('#content').load("${pageContext.request.contextPath}/pages/common/login12306.jsp"),
-                {
-                url:"https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.9030",
-                type:'post',
-                success:function(responseText){
-                    $('#yanzhengma').html(responseText);
-                }
-            });
+                $('#content').load("${pageContext.request.contextPath}/pages/common/login12306.jsp"));
         }
         function userRegister(){
             $.ajax(
@@ -52,14 +46,13 @@
             );
         }
         function showOrder(state){
-
             $.ajax(
                 $('#content').load("${pageContext.request.contextPath}/pages/common/order.jsp")
             );
         }
     </script>
 </head>
-<body style="background-color:#cdf0ff">
+<body style="background-color:#cdf0ff;">
     <div class="container  visible-md">
         <div class="row" style="margin-top: 20px;margin-bottom: -10px;">
             <div class="col-md-10 col-md-offset-1 ">
@@ -75,7 +68,7 @@
             <div class="col-md-2 col-md-offset-1">
                 <%@ include file="/pages/common/left.jsp"%>
             </div>
-            <div class="col-md-7 col-md-offset-1" id="content">
+            <div class="col-md-7 col-md-offset-1" id="content" name="content">
 
             </div>
         </div>
