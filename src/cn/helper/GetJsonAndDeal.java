@@ -109,7 +109,6 @@ public class GetJsonAndDeal {
 	}
 
 	public static JSONObject getPrice(TicketingBean tickets) throws Exception {
-		Map<String,String> priceMap = new HashMap<>();
 		String urlStr="https://kyfw.12306.cn/otn/leftTicket/queryTicketPrice?train_no="+tickets.getTrain_no()
 				+"&from_station_no="+tickets.getFrom_station_no()
 				+"&to_station_no="+tickets.getTo_station_no()

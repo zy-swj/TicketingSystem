@@ -16,7 +16,7 @@
                 data:user,
                 type:'post',
                 success:function(){
-                    document.getElementById("info").innerHTML="该用户已名字被注册！";
+                    document.getElementById("info").innerHTML="该用户名已被注册！";
                 }
             });
         });
@@ -94,7 +94,7 @@
                      <span class="glyphicon glyphicon-user"></span>
                  </span>
                 <input id="user_name" type="text" class="form-control"
-                       placeholder="用户名">
+                       placeholder="用户名" onfocus="javascript:document.getElementById('info').innerHTML='';">
             </div>
             <div class="form-group input-group">
 				<span class="input-group-addon">
@@ -116,7 +116,7 @@
                      <span class="glyphicon glyphicon-phone"></span>
                  </span>
                 <input id="user_phone" type="text" class="form-control"
-                       placeholder="手机号">
+                       placeholder="手机号" onfocus="javascript:document.getElementById('info').innerHTML='';">
             </div>
             <div class="form-group input-group">
 				<span class="input-group-addon">

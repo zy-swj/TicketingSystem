@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="cn.dao.OrderMapper">
+    <insert id="insertTickets" parameterType="cn.bean.OrderBean">
+        insert into tb_tickets(tickets_id,
+        station_train_code,
+        from_station,
+        to_station,
+        train_date,
+        start_time,
+        seat_no,
+        seat_types,
+        price,
+        user_id)
+
+        values(#{order.tickets_id},
+        #{order.station_train_code},
+        #{order.from_station},
+        #{order.to_station},
+        #{order.train_date},
+        #{order.start_time},
+        #{order.seat_no},
+        #{order.seat_types},
+        #{order.price},
+        #{order.user_id}
+        )
+    </insert>
+
+    <select id="selectOrderByUserId" parameterType="java.lang.Integer" resultType="cn.bean.OrderBean">
+        select * from tb_tickets where user_id = #{user_id}
+    </select>
+
+    <delete id="deleteTicketsByTicketsID" parameterType="java.lang.String">
+        DELETE FROM tb_tickets WHERE tickets_id = #{tickets_id}
+    </delete>
+
+    <select id="countOrder" parameterType="cn.bean.OrderBean" resultType="java.lang.Integer">
+        SELECT IFNULL(count(*),0) from tb_tickets
+        where station_train_code = #{order.station_train_code}
+        and train_date = #{order.train_date}
+        and seat_no = #{order.seat_no}
+    </select>
+
+    <update id="updateTicket" parameterType="java.lang.String">
+        update tb_tickets
+        set canendorse = false,isendorse = false
+        where tickets_id = #{tickets_id}
+    </update>
+
+    <insert id="insertEndorse" parameterType="cn.bean.OrderBean">
+        insert into tb_tickets(tickets_id,
+        station_train_code,
+        from_station,
+        to_station,
+        train_date,
+        start_time,
+        seat_no,
+        seat_types,
+        price,
+        canendorse,
+        isendorse,
+        history_id,
+        user_id)
+
+        values(#{order.tickets_id},
+        #{order.station_train_code},
+        #{order.from_station},
+        #{order.to_station},
+        #{order.train_date},
+        #{order.start_time},
+        #{order.seat_no},
+        #{order.seat_types},
+        #{order.price},
+        false,
+        true,
+        #{order.history_id},
+        #{order.user_id}
+        )
+    </insert>
+</mapper>

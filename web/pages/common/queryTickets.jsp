@@ -6,7 +6,6 @@
 <head>
 
 <script>
-
 	function query() {
 		var train_date = document.getElementById("train_date").value;
 		var from_station = document.getElementById("from_station").value;
@@ -27,7 +26,7 @@
 			},
 			type : 'post',
 			success : function(responseText) {
-			$('#show').html(responseText);
+			    $('#show').html(responseText);
 			}
 		});
 	}
@@ -38,6 +37,11 @@
 		document.getElementById("to_station").value = val1;
 	}
     function buyTickets(train_no,from_station_no,to_station_no,seat_types,station_train_code,from_station_name,to_station_name,start_time){
+	    if(${sessionScope._USER_.user_name == null}){
+	        alert('请先登录用户！');
+            $.ajax($('#content').load("${pageContext.request.contextPath}/pages/common/login.jsp"));
+	    }
+	    else{
 	    var train_date = document.getElementById("train_date").value;
         var tickets = {
             station_train_code:station_train_code,
@@ -58,6 +62,7 @@
                 $('#content').html(response);
             }
         });
+		}
     }
 </script>
 </head>

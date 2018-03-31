@@ -12,6 +12,7 @@
     <link  rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/content/bootstrap/css/bootstrap.min.css">
     <script src="${pageContext.request.contextPath}/content/js/jquery-3.2.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/content/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/content/js/myJS.js"></script>
     <script>
         $(document).ready(function(){
             $.ajax($('#content').load("${pageContext.request.contextPath}/pages/common/queryTickets.jsp"));
@@ -19,11 +20,6 @@
         });
         function userLogin(){
             $.ajax($('#content').load("${pageContext.request.contextPath}/pages/common/login.jsp"));
-        }
-
-        function login12306(){
-            $.ajax(
-                $('#content').load("${pageContext.request.contextPath}/pages/common/login12306.jsp"));
         }
         function userRegister(){
             $.ajax(
@@ -40,16 +36,7 @@
                 $('#content').load("${pageContext.request.contextPath}/pages/common/queryTickets.jsp")
             );
         }
-        function endorseTickets(){
-            $.ajax(
-                $('#content').load("${pageContext.request.contextPath}/pages/common/endorseTickets.jsp")
-            );
-        }
-        function showOrder(state){
-            $.ajax(
-                $('#content').load("${pageContext.request.contextPath}/pages/common/order.jsp")
-            );
-        }
+
     </script>
 </head>
 <body style="background-color:#cdf0ff;">
