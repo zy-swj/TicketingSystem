@@ -55,4 +55,15 @@ public class UserServiceImpl implements UserService {
     public void updatePassword(UserBean user) {
         userMapper.updatePassword(user);
     }
+
+    @Override
+    @Transactional(isolation= Isolation.REPEATABLE_READ,propagation= Propagation.REQUIRED,readOnly = false)
+    public void updateUserRealName(UserBean user) {
+        userMapper.updateUserRealName(user);
+    }
+
+    @Override
+    public UserBean selectUser(int user_id) {
+        return userMapper.selectUser(user_id);
+    }
 }
