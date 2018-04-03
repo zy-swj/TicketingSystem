@@ -12,6 +12,7 @@ public class UserBean {
     private String user_question;
     private String user_answer;
     private String real_name;
+    private String id_card;
 
     public String getReal_name() {
         return real_name;
@@ -29,7 +30,7 @@ public class UserBean {
         this.id_card = id_card;
     }
 
-    private String id_card;
+
 
     public Integer getUser_id() {
         return user_id;

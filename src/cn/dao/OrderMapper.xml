@@ -46,7 +46,7 @@
 
     <update id="updateTicket" parameterType="java.lang.String">
         update tb_tickets
-        set canendorse = false,isendorse = false
+        set canendorse = false
         where tickets_id = #{tickets_id}
     </update>
 

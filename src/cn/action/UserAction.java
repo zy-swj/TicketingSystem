@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -72,6 +74,17 @@ public class UserAction {
             return "/pages/main.jsp";
         else
             return "ERROR";
+    }
+
+    @RequestMapping("authentication")
+    public String authentication (HttpSession session,UserBean user){
+
+            userService.updateUserRealName(user);
+            UserBean userBean = userService.selectUser(user.getUser_id());
+            session.setAttribute("_USER_",userBean);
+            return "/pages/common/queryTickets.jsp";
+
+
     }
 
 

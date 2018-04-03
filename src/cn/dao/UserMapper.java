@@ -15,4 +15,6 @@ public interface UserMapper {
     void insertUser(@Param("user") UserBean user);
     int countUser(@Param("user") UserBean user);
     void updatePassword(@Param("user") UserBean user);
+    void updateUserRealName(@Param("user") UserBean user);
+    UserBean selectUser(int user_id);
 }

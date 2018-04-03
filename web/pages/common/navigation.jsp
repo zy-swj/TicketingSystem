@@ -9,13 +9,10 @@
 <head>
     <script>
         function showOrder(state){
-            if(${sessionScope._USER_.user_name == null}){
-                alert("请先登录用户！");
-                $.ajax($('#content').load("${pageContext.request.contextPath}/pages/common/login.jsp"));
-            }else{
-                var user_id = ${_USER_.user_id};
+            var user_id = ${_USER_.user_id};
+            if(user_id != null){
                 $.ajax({
-                    url:"${pageContext.request.contextPath}/order/showOrder.action?user_id=${_USER_.user_id}",
+                    url:"${pageContext.request.contextPath}/order/showOrder.action",
                     data:{
                         state:state,
                         user_id:user_id
@@ -23,8 +20,15 @@
                     type:'post',
                     success:function(response){
                         $('#content').html(response);
+                    },
+                    error:function(){
+                        alert("ERROR");
                     }
                 });
+            }
+            else{
+                alert("您好，请先登录用户!");
+                $.ajax($('#content').load("${pageContext.request.contextPath}/pages/common/login.jsp"));
             }
         }
     </script>

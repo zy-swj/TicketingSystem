@@ -8,7 +8,12 @@
 <html>
 <head>
     <script>
-
+        function authentication(){
+            $.ajax($('#content').load("${pageContext.request.contextPath}/pages/common/authentication.jsp"));
+        }
+        function userCentral(){
+            $.ajax($('#content').load("${pageContext.request.contextPath}/pages/common/userCentral.jsp"));
+        }
     </script>
 </head>
 
@@ -24,8 +29,8 @@
                 <div class="dropdown">
                     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span>${sessionScope._USER_.user_name}</button>
                     <ul class="dropdown-menu">
-                        <li><a href="#">用户中心</a></li>
-                        <li><a href="#">实名认证</a></li>
+                        <li><a href="#" onclick="userCentral();">用户中心</a></li>
+                        <li><a href="#" onclick="authentication();">实名认证</a></li>
                         <li><a href="#"
                                onclick="javascript:$.ajax($('#content').load('${pageContext.request.contextPath}/pages/common/updatePassword.jsp'));"
                                        >更改密码</a></li>
