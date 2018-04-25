@@ -1,4 +1,4 @@
 # TicketingSystem
-This project is my first code!
-采用SSM框架
-目前系统还在完善中。。。
+系统是一个铁路售票系统，采用SSM框架
+主要功能有用户的登录、注册与密码找回，车票查询，车票预订，改签和退票
+同时支持日期车票的日期检测
