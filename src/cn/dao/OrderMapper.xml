@@ -45,9 +45,10 @@
     </select>
 
     <update id="updateTicket" parameterType="java.lang.String">
-        update tb_tickets
-        set canendorse = false
-        where tickets_id = #{tickets_id}
+        UPDATE tb_tickets
+        SET canendorse = 0,
+        isendorse = 0
+        WHERE tickets_id = #{tickets_id}
     </update>
 
     <insert id="insertEndorse" parameterType="cn.bean.OrderBean">
@@ -74,10 +75,25 @@
         #{order.seat_no},
         #{order.seat_types},
         #{order.price},
-        false,
-        true,
+        0,
+        1,
         #{order.history_id},
         #{order.user_id}
         )
     </insert>
+
+    <select id="selectGone" resultType="cn.bean.OrderBean">
+        SELECT * FROM tb_tickets
+        WHERE start_time BETWEEN '00:00' AND CURTIME() AND train_date BETWEEN CURDATE() AND CURDATE()
+        OR train_date BETWEEN '1970-01-01' AND DATE_ADD(CURDATE(),INTERVAL -1 DAY)
+    </select>
+    <select id="selectNotGo" resultType="cn.bean.OrderBean">
+        SELECT * FROM tb_tickets
+        WHERE start_time BETWEEN CURTIME() AND '23:59' AND train_date BETWEEN CURDATE() AND CURDATE()
+        OR train_date BETWEEN DATE_ADD(CURDATE(),INTERVAL 1 DAY) AND DATE_ADD(CURDATE(),INTERVAL 30 DAY)
+    </select>
+
+    <select id="selectTrip"  resultType="cn.bean.OrderBean">
+        SELECT from_station , to_station ,train_date FROM tb_tickets WHERE user_id = #{user_id} order by train_date desc
+    </select >
 </mapper>

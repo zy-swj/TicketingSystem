@@ -8,6 +8,31 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+    <script>
+        $('#updatePhoneEmail').click(function () {
+            var user_id = ${sessionScope._USER_.user_id};
+            var user_phone = document.getElementById("userPhone").value;
+            var user_email = document.getElementById("userEmail").value;
+            if(user_phone == "")
+                user_phone = '${sessionScope._USER_.user_phone}';
+            if(user_email == "")
+                user_email = '${sessionScope._USER_.user_email}';
+            var user = {
+                user_id:user_id,
+                user_phone:user_phone,
+                user_email:user_email
+            }
+            $.ajax({
+                url:"${pageContext.request.contextPath}/user/updatePhoneEmail.action",
+                type:'post',
+                data:user,
+                success:function(response){
+                    alert("修改成功");
+                    $('#content').html(response);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <div  align="center">
@@ -30,7 +55,7 @@
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-phone"></span>
                     </span>
-                            <input id="user_phone" type="text" class="form-control"
+                            <input id="userPhone" type="text" class="form-control"
                                    placeholder="${_USER_.user_phone}">
                         </div></td>
                         <td></td>
@@ -40,7 +65,7 @@
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-envelope"></span>
                     </span>
-                            <input id="user_email" type="text" class="form-control"
+                            <input id="userEmail" type="text" class="form-control"
                                    placeholder="${_USER_.user_email}">
                         </div></td>
                         <td></td>

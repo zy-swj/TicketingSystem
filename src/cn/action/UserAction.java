@@ -83,13 +83,15 @@ public class UserAction {
             UserBean userBean = userService.selectUser(user.getUser_id());
             session.setAttribute("_USER_",userBean);
             return "/pages/common/queryTickets.jsp";
-
-
     }
 
-
-
-
+    @RequestMapping("updatePhoneEmail")
+    public String updatePhoneEmail(HttpSession session,UserBean user){
+        userService.updatePhoneAndEmail(user);
+        UserBean userBean = userService.selectUser(user.getUser_id());
+        session.setAttribute("_USER_",userBean);
+        return "/pages/common/userCentral.jsp";
+    }
 
         @Test()
         public void test(){

@@ -62,6 +62,8 @@
 			<td id="to_station_name">${e.to_station_name}</td>
 			<%--查票价--%>
 			<td><button type="button" class="btn btn-success btn-xs" onclick="buyTickets('${e.train_no}','${e.from_station_no}','${e.to_station_no}','${e.seat_types}','${e.station_train_code}','${e.from_station_name}','${e.to_station_name}','${e.start_time}');">订票</button></td>
+			<%-- 车次详情信息--%>
+
 		</tr>
 		   
            
@@ -88,7 +90,7 @@
 	</table>
 	</c:if>
 	<c:if test="${empty _LIST_}">
-		<p style="color:#ff0000;font-size:20px;" align="center">对不起，系统繁忙，请稍后再试！！！</p>
+		<p style="color:#ff0000;font-size:20px;" align="center">对不起，未查询到任何余票信息！</p>
 	</c:if>
 </body>
 </html>

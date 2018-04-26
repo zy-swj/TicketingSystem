@@ -17,4 +17,5 @@ public interface UserService {
     void updatePassword(@Param("user") UserBean user);
     void updateUserRealName(@Param("user") UserBean user);
     UserBean selectUser(int user_id);
+    void updatePhoneAndEmail(@Param("user") UserBean user);
 }

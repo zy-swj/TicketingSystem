@@ -16,6 +16,7 @@
 		    if(inputs[i].checked)
 		        purpose_codes = inputs[i].value;
 		}
+        $('#show').load("${pageContext.request.contextPath}/pages/common/progress.jsp");
 		$.ajax({
 			url : "${pageContext.request.contextPath}/tickets/queryTickets.action",
 			data : {

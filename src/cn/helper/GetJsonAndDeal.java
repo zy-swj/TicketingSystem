@@ -23,7 +23,7 @@ public class GetJsonAndDeal {
 	public static List<String> getTicketsInfo(String train_date, String from_station, String to_station, String purpose_codes) throws Exception {
 		List<String> ticketsInfo_list = new ArrayList<>();
 		List<String> jsonLists = new ArrayList<>();
-		String urlStr = "https://kyfw.12306.cn/otn/leftTicket/queryO?"
+		String urlStr = "https://kyfw.12306.cn/otn/leftTicket/query?"
 				+ "leftTicketDTO.train_date="
 				+ train_date
 				+ "&leftTicketDTO.from_station="

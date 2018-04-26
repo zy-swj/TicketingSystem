@@ -16,6 +16,7 @@
                 if(inputs[i].checked)
                     purpose_codes = inputs[i].value;
             }
+            $('#show').load("${pageContext.request.contextPath}/pages/common/progress.jsp");
             $.ajax({
                 url : "${pageContext.request.contextPath}/tickets/queryTickets.action",
                 data : {
@@ -70,7 +71,7 @@
 
 <body>
 <div align="center">
-    <label>车票改签${tickets_ID}</label>
+    <label>车票改签</label>
     <from role="form">
         <div style="width:250px;">
             <div style="margin-top: 15px;"><%@ include file="/pages/common/chooseDate.jsp"%></div>

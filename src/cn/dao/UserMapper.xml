@@ -53,4 +53,11 @@
         select * from tb_user where user_id = #{user_id}
     </select>
 
+    <update id="updatePhoneAndEmail" parameterType="cn.bean.UserBean">
+        UPDATE tb_user
+        SET user_phone = #{user.user_phone},
+            user_email = #{user.user_email}
+        WHERE user_id = #{user.user_id}
+    </update>
+
 </mapper>

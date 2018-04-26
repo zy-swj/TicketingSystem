@@ -31,6 +31,29 @@
                 $.ajax($('#content').load("${pageContext.request.contextPath}/pages/common/login.jsp"));
             }
         }
+
+        function showTrip(){
+            var user_id = ${_USER_.user_id};
+            if(user_id != null){
+                $.ajax({
+                    url:"${pageContext.request.contextPath}/order/myTrip.action",
+                    data:{
+                        user_id:user_id
+                    },
+                    type:'post',
+                    success:function(response){
+                        $('#content').html(response);
+                    },
+                    error:function(){
+                        alert("ERROR");
+                    }
+                });
+            }
+            else{
+                alert("您好，请先登录用户!");
+                $.ajax($('#content').load("${pageContext.request.contextPath}/pages/common/login.jsp"));
+            }
+        }
     </script>
 
 </head>
@@ -51,8 +74,8 @@
         <div class="collapse navbar-collapse" id="n-navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
                 <li><a href="#" onclick="queryTickets();">余票查询</a></li>
-                <li><a href="#" onclick="showOrder('ALL');">车票改签</a></li>
-                <li><a href="#" onclick="showOrder('ALL');">退票</a></li>
+                <li><a href="#" onclick="showOrder('N');">车票改签</a></li>
+                <li><a href="#" onclick="showOrder('N');">退票</a></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">我的订单 <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -62,7 +85,7 @@
                         <li><a href="#" onclick="showOrder('ALL');">全部订单</a></li>
                     </ul>
                 </li>
-                <li><a href="#">我的行程</a></li>
+                <li><a href="#" onclick = "showTrip()">我的行程</a></li>
             </ul>
             <c:if test="${empty _USER_}">
                 <ul class="nav navbar-nav navbar-right">

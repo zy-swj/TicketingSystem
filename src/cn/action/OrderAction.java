@@ -67,9 +67,9 @@ public class OrderAction {
         ModelAndView model =  new ModelAndView();
         List<OrderBean> list = new ArrayList<>();
         if("Y".equals(state)){
-            return null;
+            list = orderService.selectGone(user_id);
         }else if("N".equals(state)){
-            return null;
+            list = orderService.selectNotGo(user_id);
         }else{
             list = orderService.selectOrderByUserId(user_id);
         }
@@ -82,7 +82,7 @@ public class OrderAction {
     @RequestMapping("/cancelTickets")
     public String cancelTickets(HttpSession session,String tickets_id,Integer user_id){
         orderService.deleteTicketsByTicketsID(tickets_id);
-        List<OrderBean> list = orderService.selectOrderByUserId(user_id);
+        List<OrderBean> list = orderService.selectNotGo(user_id);
         if(list.size()> 0)
             session.setAttribute("_ORDER_",list);
         else
@@ -121,14 +121,21 @@ public class OrderAction {
         }
         orderService.updateTicket(order.getHistory_id());
         orderService.insertEndorse(order);
-        List<OrderBean> list =  orderService.selectOrderByUserId(order.getUser_id());
+        List<OrderBean> list =  orderService.selectNotGo(order.getUser_id());
         session.setAttribute("_ORDER_",list);
         return "/pages/common/order.jsp";
     }
 
+    @RequestMapping("/myTrip")
+    public String myTrip(HttpSession session, Integer user_id){
+        List<OrderBean> list = orderService.selectTrip(user_id);
+        session.setAttribute("_TRIP_",list);
+        return "/pages/common/myTrip.jsp";
+    }
+
     @Test
     public void test() {
-        int[] carriage_no = new int[16];
+       /* int[] carriage_no = new int[16];
         for (int i = 0; i < 16; i++)
             carriage_no[i] = i + 1;
         for (int i = 0; i < 16; i++)
@@ -138,8 +145,13 @@ public class OrderAction {
         Matcher m = p.matcher("¥1099.0");
         if (m.find()) {
             System.out.println(m.group(0));
+            }*/
 
-        }
+       if(1<2 || (2==2 && true))
+           System.out.println("true");
+       else
+           System.out.println("false");
+
     }
 
 }

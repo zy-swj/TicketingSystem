@@ -20,7 +20,7 @@
                 }
             });
         });
-        $('#user_name').blur(function(){
+        $('#user_phone').blur(function(){
             var user_phone = $('#user_phone').val();
             var user = {user_phone:user_phone}
             $.ajax({
@@ -32,6 +32,14 @@
                 }
             });
         });
+
+        $('#user_checkpassword').blur(function(){
+            var pas1 = $('#user_password').val();
+            var pas2 =  $('#user_checkpassword').val();
+           if( pas1 != pas2)
+               alert("两次密码输入不一致！！！");
+        });
+
         $('#user_email').blur(function (){
             var user_email = $('#user_email').val();
             var user = {user_email:user_email}

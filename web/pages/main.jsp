@@ -40,7 +40,7 @@
     </script>
 </head>
 <body style="background-color:#cdf0ff;">
-    <div class="container  visible-md">
+    <div class="container">  <%--visible-md--%>
         <div class="row" style="margin-top: 20px;margin-bottom: -10px;">
             <div class="col-md-10 col-md-offset-1 ">
                  <%@ include file="/pages/common/head.jsp"%>

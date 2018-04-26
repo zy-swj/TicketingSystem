@@ -30,7 +30,10 @@
                     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span>${sessionScope._USER_.user_name}</button>
                     <ul class="dropdown-menu">
                         <li><a href="#" onclick="userCentral();">用户中心</a></li>
-                        <li><a href="#" onclick="authentication();">实名认证</a></li>
+                        <li>
+                            <c:if test="${sessionScope._USER_.real_name ==  null}"><a href="#" onclick="authentication();">实名认证</a></c:if>
+                            <c:if test="${sessionScope._USER_.real_name !=  null}"><a href="#">已实名认证</a></c:if>
+                        </li>
                         <li><a href="#"
                                onclick="javascript:$.ajax($('#content').load('${pageContext.request.contextPath}/pages/common/updatePassword.jsp'));"
                                        >更改密码</a></li>

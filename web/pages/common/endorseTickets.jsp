@@ -12,16 +12,13 @@
         function endorse(seat_types,price){
             var date = new Date();
             var tickets_id = date.getYear()+""+date.getMonth()+""+date.getDay()+""+date.getTime();
-            alert(tickets_id);
             var station_train_code = '${_TRAIN_.station_train_code}';
-            alert(station_train_code);
             var from_station='${_TRAIN_.from_station_name}';
             var to_station ='${_TRAIN_.to_station_name}';
             var train_date = '${_TRAIN_.train_date}';
             var start_time ='${_TRAIN_.start_time}';
             var user_id = ${_USER_.user_id};
-            var history_id = ${tickets_ID};
-            alert(history_id);
+            var history_id = '${tickets_ID}';
             var order = {
                 tickets_id:tickets_id,
                 station_train_code:station_train_code,
